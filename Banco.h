@@ -1,7 +1,6 @@
 #ifndef BANCO_H_INCLUDED
 #define BANCO_H_INCLUDED
 //Omar Emilio Casillas Alday - A01712114
-
 class IngresosAnuales{
     private:
         int depositoM;
@@ -117,11 +116,11 @@ void GananciasAnual::ganancias(){
     float total;
     int total_ingresos;
     int total_deposito;
-    int depositoM;
-    depositoM=ingresosanuales.get_depositoM();
+
+    ;
     total=ingreso_inicial;
     total_deposito=ingresosanuales.get_ingresosa();
-    if(ingreso_inicial>0 && depositoM>0){
+    if(ingreso_inicial>0 && ingresosanuales.get_depositoM()>0){
         for(int i=0; i<year;i++){
           total_ingresos=total_deposito+total;
           total=total_ingresos*(interes/100)+total_ingresos;
