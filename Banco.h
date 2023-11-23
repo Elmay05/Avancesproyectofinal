@@ -1,9 +1,8 @@
-#include <string>
-#include <iostream>
-//A01712114-Omar Emilio Casillas Alday
-//Primera clase
+#ifndef BANCO3_H_INCLUDED
+#define BANCO3_H_INCLUDED
+//Omar Emilio Casillas Alday - A01712114
 class CuentaBanco{
-    private:
+    protected:
         std::string nombre;
         int ingreso_inicial;
         float interes;
@@ -17,7 +16,7 @@ class CuentaBanco{
         void set_nombre(std::string nom);
         void set_ingreso_inicial(int ini);
         void set_intereses(float inter);
-        void resumen();
+        void resumencuenta();
 };
 CuentaBanco::CuentaBanco(){
     nombre="N/A";
@@ -47,122 +46,72 @@ void CuentaBanco::set_ingreso_inicial(int ini){
 void CuentaBanco::set_intereses(float inter){
     interes=inter;
 }
-void CuentaBanco::resumen(){
+void CuentaBanco::resumencuenta(){
     std::cout<<nombre<<" inicia con "<<ingreso_inicial<<" con "<<interes<<"% de intereses"<<std::endl;
 }
 
 
 //Segunda clase
-class IngresosMensuales{
+class IngresosMensuales:public CuentaBanco{
     private:
         std::string nombre;
         int ingreso_inicial;
         int depositoM;
     public:
         IngresosMensuales();
-        IngresosMensuales(std::string nom, int ini, int deposit);
-        std::string get_nombre();
-        int get_ingreso_inicial();
+        IngresosMensuales(std::string nom, int ini,float inter, int deposit);
         int get_depositoM();
-        void set_nombre(std::string nom);
-        void set_ingreso_inicial(int ini);
         void set_depositoM(int dep);
         void resumen();
 };
-IngresosMensuales::IngresosMensuales(){
-    nombre="No existe";
-    ingreso_inicial=0;
+IngresosMensuales::IngresosMensuales():CuentaBanco(){
     depositoM=0;
 }
-IngresosMensuales::IngresosMensuales(std::string nom, int ini, int deposit){
-    nombre=nom;
-    ingreso_inicial=ini;
+IngresosMensuales::IngresosMensuales(std::string nom, int ini, float inter, int deposit):CuentaBanco(nom, ini, inter){
     depositoM=deposit;
 }
-std::string IngresosMensuales::get_nombre(){
-    return nombre;
-}
-int IngresosMensuales::get_ingreso_inicial(){
-    return ingreso_inicial;
-}
+
 int IngresosMensuales::get_depositoM(){
     return depositoM;
-}
-void IngresosMensuales::set_nombre(std::string nom){
-    nombre=nom;
-}
-void IngresosMensuales::set_ingreso_inicial(int ini){
-    ingreso_inicial=ini;
 }
 void IngresosMensuales::set_depositoM(int dep){
     depositoM=dep;
 }
 void IngresosMensuales::resumen(){
-    std::cout<<nombre<<" inicia con "<<ingreso_inicial<<" y deposita "<<depositoM<<" pesos mensualmente"<<std::endl;
+    resumencuenta();
+    std::cout<<" y deposita "<<depositoM<<" pesos mensualmente"<<std::endl;
 }
 
 //Tercera clase
-class GananciasAnual{
+class GananciasAnual:public CuentaBanco{
     private:
-        std::string nombre;
-        int ingreso_inicial;
-        float intereses;
         int depositoM;
         int anos;
     public:
         GananciasAnual();
         GananciasAnual(std::string nom, int ini, float inter, int dep, int ano);
-        std::string get_nombre();
-        int get_ingreso_inicial();
-        float get_intereses();
         int get_depositoM();
         int get_anos();
-
-        void set_nombre(std::string nom);
-        void set_ingreso_inicial(int ini);
-        void set_intereses(float inter);
         void set_depositoM(int dep);
         void set_anos(int ano);
         void ganancias();
         void resumen();
 };
-GananciasAnual::GananciasAnual(){
-    nombre="N/A";
-    ingreso_inicial=0;
-    intereses=0.0;
+GananciasAnual::GananciasAnual():CuentaBanco(){
+
     depositoM=0;
     anos=0;
 }
-GananciasAnual::GananciasAnual(std::string nom, int ini, float inter, int dep, int ano){
-    nombre=nom;
-    ingreso_inicial=ini;
-    intereses=inter;
+GananciasAnual::GananciasAnual(std::string nom, int ini, float inter, int dep, int ano):CuentaBanco(nom, ini, inter){
     depositoM=dep;
     anos=ano;
 }
-std::string GananciasAnual::get_nombre(){
-    return nombre;
-}
-int GananciasAnual::get_ingreso_inicial(){
-    return ingreso_inicial;
-}
-float GananciasAnual::get_intereses(){
-    return intereses;
-}
+
 int GananciasAnual::get_depositoM(){
     return depositoM;
 }
 int GananciasAnual::get_anos(){
     return anos;
-}
-void GananciasAnual::set_nombre(std::string nom){
-    nombre=nom;
-}
-void GananciasAnual::set_ingreso_inicial(int ini){
-    ingreso_inicial=ini;
-}
-void GananciasAnual::set_intereses(float inter){
-    intereses=inter;
 }
 void GananciasAnual::set_depositoM(int dep){
     depositoM=dep;
@@ -180,12 +129,14 @@ void GananciasAnual::ganancias(){
     if(ingreso_inicial>0 && depositoM>0){
         for(int i=0; i<anos;i++){
           total_ingresos=total_deposito+total;
-          total=total_ingresos*(intereses/100)+total_ingresos;
+          total=total_ingresos*(interes/100)+total_ingresos;
         };
-        std::cout<<nombre<<" inicia con $"<<ingreso_inicial<<", tiene "<<intereses<<"% de intereses, mensualmente depositará $"<<depositoM<<" y tendrá "<<total<<" en "<<anos<<" años"<<std::endl;
+        std::cout<<nombre<<" inicia con $"<<ingreso_inicial<<", tiene "<<interes<<"% de intereses, mensualmente depositarÃ¡ $"<<depositoM<<" y tendrÃ¡ "<<total<<" en "<<anos<<" aÃ±os"<<std::endl;
     }else{
         std::cout<<"No existen beneficios para esta cuenta";
     }
 }
 
-// Banco.h
+
+
+#endif // BANCO3_H_INCLUDED
