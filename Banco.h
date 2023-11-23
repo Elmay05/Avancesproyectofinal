@@ -1,32 +1,66 @@
 #ifndef BANCO_H_INCLUDED
 #define BANCO_H_INCLUDED
 //Omar Emilio Casillas Alday - A01712114
+
+class IngresosAnuales{
+    private:
+        int depositoM;
+        int ingresosa;
+    public:
+        IngresosAnuales():depositoM(0), ingresosa(0){};
+        IngresosAnuales(int deposite):depositoM(deposite), ingresosa(deposite*12){};
+        int get_depositoM();
+        int get_ingresosa();
+        void set_depositoM(int dep);
+        void resumei();
+};
+
+int IngresosAnuales::get_depositoM(){
+    return depositoM;
+}
+int IngresosAnuales::get_ingresosa(){
+    return ingresosa;
+}
+void IngresosAnuales::set_depositoM(int dep){
+    depositoM=dep;
+    ingresosa=dep*12;
+}
+void IngresosAnuales::resumei(){
+    std::cout<<" deposita "<<depositoM<<" pesos mensualmente y tendrá "<<ingresosa<<"al año"<<std::endl;
+}
+
+
+
 class CuentaBanco{
     protected:
         std::string nombre;
         int ingreso_inicial;
         float interes;
+        IngresosAnuales ingresosanuales;
     public:
         CuentaBanco();
-        CuentaBanco(std::string nom, int inicial, float inter);
+        CuentaBanco(std::string nom, int inicial, float inter,int deposite);
         std::string get_nombre();
         int get_ingreso_inicial();
         float get_interes();
-
+        int get_deposito();
         void set_nombre(std::string nom);
         void set_ingreso_inicial(int ini);
         void set_intereses(float inter);
-        void resumencuenta();
+        void resumen();
 };
-CuentaBanco::CuentaBanco(){
+CuentaBanco::CuentaBanco():ingresosanuales(){
     nombre="N/A";
     ingreso_inicial=0;
     interes=0.0;
 }
-CuentaBanco::CuentaBanco(std::string nom, int inicial, float inter){
+CuentaBanco::CuentaBanco(std::string nom, int inicial, float inter,int deposite):ingresosanuales(deposite){
     nombre=nom;
     ingreso_inicial=inicial;
     interes=inter;
+}
+int CuentaBanco::get_deposito(){
+    return ingresosanuales.get_depositoM();
 }
 std::string CuentaBanco::get_nombre(){
     return nombre;
@@ -46,97 +80,57 @@ void CuentaBanco::set_ingreso_inicial(int ini){
 void CuentaBanco::set_intereses(float inter){
     interes=inter;
 }
-void CuentaBanco::resumencuenta(){
+void CuentaBanco::resumen(){
     std::cout<<nombre<<" inicia con "<<ingreso_inicial<<" con "<<interes<<"% de intereses"<<std::endl;
+    ingresosanuales.resumei();
 }
 
-
-//Segunda clase
-class IngresosMensuales:public CuentaBanco{
-    private:
-        std::string nombre;
-        int ingreso_inicial;
-        int depositoM;
-    public:
-        IngresosMensuales();
-        IngresosMensuales(std::string nom, int ini,float inter, int deposit);
-        int get_depositoM();
-        void set_depositoM(int dep);
-        void resumen();
-};
-IngresosMensuales::IngresosMensuales():CuentaBanco(){
-    depositoM=0;
-}
-IngresosMensuales::IngresosMensuales(std::string nom, int ini, float inter, int deposit):CuentaBanco(nom, ini, inter){
-    depositoM=deposit;
-}
-
-int IngresosMensuales::get_depositoM(){
-    return depositoM;
-}
-void IngresosMensuales::set_depositoM(int dep){
-    depositoM=dep;
-}
-void IngresosMensuales::resumen(){
-    resumencuenta();
-    std::cout<<" y deposita "<<depositoM<<" pesos mensualmente"<<std::endl;
-}
-
-//Tercera clase
 class GananciasAnual:public CuentaBanco{
     private:
-        int depositoM;
-        int anos;
+        int year;
     public:
         GananciasAnual();
-        GananciasAnual(std::string nom, int ini, float inter, int dep, int ano);
-        int get_depositoM();
-        int get_anos();
+        GananciasAnual(std::string nom, int ini, float inter, int deposite, int yea);
+        int get_year();
         void set_depositoM(int dep);
-        void set_anos(int ano);
+        void set_year(int yea);
         void ganancias();
-        void resumen();
+
 };
 GananciasAnual::GananciasAnual():CuentaBanco(){
-
-    depositoM=0;
-    anos=0;
+    year=0;
 }
-GananciasAnual::GananciasAnual(std::string nom, int ini, float inter, int dep, int ano):CuentaBanco(nom, ini, inter){
-    depositoM=dep;
-    anos=ano;
+GananciasAnual::GananciasAnual(std::string nom, int ini, float inter, int deposite, int yea):CuentaBanco(nom, ini, inter, deposite){
+    year=yea;
 }
 
-int GananciasAnual::get_depositoM(){
-    return depositoM;
-}
-int GananciasAnual::get_anos(){
-    return anos;
+int GananciasAnual::get_year(){
+    return ingresosanuales.get_ingresosa();
 }
 void GananciasAnual::set_depositoM(int dep){
-    depositoM=dep;
+    ingresosanuales.set_depositoM(dep);
 }
-void GananciasAnual::set_anos(int ano){
-    anos=ano;
+void GananciasAnual::set_year(int yea){
+    year=yea;
 }
 void GananciasAnual::ganancias(){
     float total;
     int total_ingresos;
     int total_deposito;
-
+    int depositoM;
+    depositoM=ingresosanuales.get_depositoM();
     total=ingreso_inicial;
-    total_deposito=depositoM*12;
+    total_deposito=ingresosanuales.get_ingresosa();
     if(ingreso_inicial>0 && depositoM>0){
-        for(int i=0; i<anos;i++){
+        for(int i=0; i<year;i++){
           total_ingresos=total_deposito+total;
           total=total_ingresos*(interes/100)+total_ingresos;
         };
-        std::cout<<nombre<<" inicia con $"<<ingreso_inicial<<", tiene "<<interes<<"% de intereses, mensualmente depositará $"<<depositoM<<" y tendrá "<<total<<" en "<<anos<<" años"<<std::endl;
+        std::cout<<nombre<<" inicia con $"<<ingreso_inicial<<", tiene "<<interes<<"% de intereses, mensualmente depositará $"<<ingresosanuales.get_depositoM()<<" y tendrá "<<total<<" en "<<year<<" años"<<std::endl;
     }else{
         std::cout<<"No existen beneficios para esta cuenta";
+
     }
 }
-
-
 
 #endif // BANCO_H_INCLUDED
