@@ -1,5 +1,5 @@
-#ifndef BANCO3_H_INCLUDED
-#define BANCO3_H_INCLUDED
+#ifndef BANCO_H_INCLUDED
+#define BANCO_H_INCLUDED
 //Omar Emilio Casillas Alday - A01712114
 class CuentaBanco{
     protected:
@@ -139,4 +139,4 @@ void GananciasAnual::ganancias(){
 
 
 
-#endif // BANCO3_H_INCLUDED
+#endif // BANCO_H_INCLUDED
