@@ -8,7 +8,7 @@
  *30/11/2023
  *
  */
-int main(){
+void main(){
 
     //Variables para los valores a solicitar
     std::string nom;
