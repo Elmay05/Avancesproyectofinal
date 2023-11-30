@@ -8,7 +8,7 @@
  *30/11/2023
  *
  */
-void main(){
+int main(){
 
     //Variables para los valores a solicitar
     std::string nom;
@@ -35,7 +35,7 @@ void main(){
     GananciasAnual cuenta_2;
     cuenta_2.resumen();
     cuenta_2.ganancias();
-
+    return 0;
 
 
 
