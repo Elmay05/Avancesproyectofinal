@@ -1,5 +1,6 @@
 #ifndef BANCO_H_INCLUDED
 #define BANCO_H_INCLUDED
+#include <iostream>
 /*
  *Proyecto plan de finanzas 
  *Omar Emilio Casillas Alday 
